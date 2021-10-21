@@ -16,11 +16,11 @@ public class Issue {
         this.status = StatusCode.PENDING;
     }
 
-    public Issue(String fromFileWrangler) { // takes the raw string and converts it into an Issue
-        this.id = UUID.fromString(extract("id", fromFileWrangler));
-        this.title = extract("title", fromFileWrangler);
-        this.description = extract("description", fromFileWrangler);
-        this.status = StatusCode.valueOf(extract("status", fromFileWrangler));
+    public Issue(String id, String title, String description, String status) { // takes the raw string and converts it into an Issue
+        this.id = UUID.fromString(id);
+        this.title = title;
+        this.description = description;
+        this.status = StatusCode.valueOf(status);
     }
 
     @Override
@@ -32,13 +32,7 @@ public class Issue {
                 '}';
     }
 
-    private String extract(String string, String from){
-        // gets the start and end indexes of the value we want
-        int indexStart = from.indexOf(string + "='") + string.length() + 2;
-        int indexEnd = from.indexOf("'", indexStart);
 
-        return  from.substring(indexStart, indexEnd);
-    }
 
     public String getTitle() {
         return title;

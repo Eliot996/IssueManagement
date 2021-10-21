@@ -29,10 +29,22 @@ public class FileWrangler {
 
         ArrayList<Issue> issues = new ArrayList<>();
         while(scanner.hasNextLine()){
-            issues.add(new Issue(scanner.nextLine()));
+            String issueString = scanner.nextLine();
+            issues.add(new Issue(extract("id",           issueString),
+                                 extract("title",        issueString),
+                                 extract("description",  issueString),
+                                 extract("status",       issueString)));
         }
 
         return issues;
+    }
+
+    private String extract(String type, String from){
+        // gets the start and end indexes of the value we want
+        int indexStart = from.indexOf(type + "='") + type.length() + 2;
+        int indexEnd = from.indexOf("'", indexStart);
+
+        return  from.substring(indexStart, indexEnd);
     }
 
 
