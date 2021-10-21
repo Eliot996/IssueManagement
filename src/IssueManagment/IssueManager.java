@@ -66,9 +66,9 @@ public class IssueManager {
             int changeTo = userInterface.getCommandFromUser();
 
             switch (changeTo){
-                case 1 -> issues.get(target).setStatus("PENDING");
-                case 2 -> issues.get(target).setStatus("APPROVED");
-                case 3 -> issues.get(target).setStatus("REJECTED");
+                case 1 -> issues.get(target).setStatus(StatusCode.PENDING);
+                case 2 -> issues.get(target).setStatus(StatusCode.APPROVED);
+                case 3 -> issues.get(target).setStatus(StatusCode.REJECTED);
             }
 
             fileWrangler.overwriteStash(issues);
@@ -85,7 +85,7 @@ public class IssueManager {
             ArrayList<Issue> pendingIssues = new ArrayList<>();
 
             for (Issue issue : issues) {
-                if (issue.getStatus().equals("PENDING")) pendingIssues.add(issue);
+                if (issue.getStatus() == StatusCode.PENDING) pendingIssues.add(issue);
             }
 
             userInterface.print(pendingIssues);
@@ -101,8 +101,8 @@ public class IssueManager {
             int changeTo = userInterface.getCommandFromUser();
 
             switch (changeTo){
-                case 1 -> pendingIssues.get(target).setStatus("APPROVED");
-                case 2 -> pendingIssues.get(target).setStatus("REJECTED");
+                case 1 -> pendingIssues.get(target).setStatus(StatusCode.APPROVED);
+                case 2 -> pendingIssues.get(target).setStatus(StatusCode.REJECTED);
             }
 
             fileWrangler.overwriteStash(issues);

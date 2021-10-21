@@ -4,23 +4,23 @@ import java.util.UUID;
 
 public class Issue {
 
-    private UUID id;
+    private final UUID id;
     private String title;
     private String description;
-    private String status;
+    private StatusCode status;
 
     public Issue(String title, String description) {
         this.id = UUID.randomUUID();
         this.title = title;
         this.description = description;
-        this.status = "PENDING";
+        this.status = StatusCode.PENDING;
     }
 
     public Issue(String fromFileWrangler) { // takes the raw string and converts it into an Issue
         this.id = UUID.fromString(extract("id", fromFileWrangler));
         this.title = extract("title", fromFileWrangler);
         this.description = extract("description", fromFileWrangler);
-        this.status = extract("status", fromFileWrangler);
+        this.status = StatusCode.valueOf(extract("status", fromFileWrangler));
     }
 
     @Override
@@ -48,11 +48,11 @@ public class Issue {
         return description;
     }
 
-    public String getStatus() {
+    public StatusCode getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(StatusCode status) {
         this.status = status;
     }
 }
