@@ -26,9 +26,14 @@ public class IssueManager {
                     break;
 
                 case 20: // change status to any status
-                       changeStatusOfIssue();
+                    changeStatusOfIssue();
+                    break;
 
-                case 3: // print all issues
+                case 3: // print all approved issues
+                    printApprovedIssues();
+                    break;
+
+                case 30: // print all issues
                     try {
                         userInterface.print(fileWrangler.getAllIssuesFromFile("stash"));
                     } catch (FileNotFoundException e) {
@@ -47,6 +52,18 @@ public class IssueManager {
 
 
 
+    }
+
+    private void printApprovedIssues() {
+        try {
+            ArrayList<Issue> issues = fileWrangler.getAllIssuesFromFile("stash");
+            issues.removeIf(issue -> issue.getStatus() != StatusCode.APPROVED);
+
+            userInterface.print(issues);
+
+        } catch (FileNotFoundException e) {
+            userInterface.print(e);
+        }
     }
 
     private void changeStatusOfIssue() {
@@ -123,16 +140,6 @@ public class IssueManager {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-    }
-
-    public Issue getIssueFromName(String title) throws FileNotFoundException {
-        ArrayList<Issue> issues = fileWrangler.getAllIssuesFromFile("stash");
-        for (Issue issue : issues) {
-            if (issue.getTitle().equals(title)){
-                return issue;
-            }
-        }
-        return null;
     }
 
     public void createIssue(){
