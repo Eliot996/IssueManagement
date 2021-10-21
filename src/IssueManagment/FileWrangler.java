@@ -13,19 +13,26 @@ public class FileWrangler {
 
 
     public void writeToFile(Issue issue, String fileName) throws FileNotFoundException{
-        PrintStream ps = new PrintStream(new FileOutputStream(FILE_PATH_STASH, true));
+        String filePath = setFilePathFromString(fileName);
+
+
+        PrintStream ps = new PrintStream(new FileOutputStream(filePath, true));
         ps.append(issue.toString()).append('\n');
     }
 
     public void overwriteFile(ArrayList<Issue> issues, String fileName) throws FileNotFoundException{
-        PrintStream ps = new PrintStream(FILE_PATH_STASH);
+        String filePath = setFilePathFromString(fileName);
+
+        PrintStream ps = new PrintStream(filePath);
         for (Issue issue : issues) {
             ps.append(issue.toString()).append('\n');
         }
     }
 
     public ArrayList<Issue> getAllIssuesFromFile(String fileName) throws FileNotFoundException{
-        Scanner scanner = new Scanner(new File(FILE_PATH_STASH));
+        String filePath = setFilePathFromString(fileName);
+
+        Scanner scanner = new Scanner(new File(filePath));
 
         ArrayList<Issue> issues = new ArrayList<>();
         while(scanner.hasNextLine()){
@@ -47,5 +54,11 @@ public class FileWrangler {
         return  from.substring(indexStart, indexEnd);
     }
 
-
+    private String setFilePathFromString(String string){
+        return switch (string) {
+            case "stash" -> FILE_PATH_STASH;
+            case "board" -> FILE_PATH_BOARD;
+            default -> throw new IllegalArgumentException();
+        };
+    }
 }
