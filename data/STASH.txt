@@ -1,0 +1,5 @@
+{id='6891c12f-2bb8-4a1b-9493-fa3e7c3b05ee', title='an issue', description='something is wrong', status='PENDING'}
+{id='6ab24669-c78e-4b73-bfe1-1f7475c96d5e', title='another issue', description='computer says no', status='PENDING'}
+{id='91c7c134-6977-4d47-9a22-3a63c7a19329', title='a third issue', description='not quite 42', status='PENDING'}
+{id='19e6b9c5-128b-47f0-a49c-d644e3adcc5d', title='a serious problem', description='its a trap', status='PENDING'}
+{id='f4839cd5-eb1b-4798-a5f0-fdd3d8764bde', title='Cold soup', description='not quite good', status='APPROVED'}
