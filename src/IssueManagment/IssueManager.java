@@ -30,7 +30,7 @@ public class IssueManager {
 
                 case 3: // print all issues
                     try {
-                        userInterface.print(fileWrangler.getAllIssuesFromStash());
+                        userInterface.print(fileWrangler.getAllIssuesFromFile("stash"));
                     } catch (FileNotFoundException e) {
                         userInterface.print(e);
                     }
@@ -51,11 +51,16 @@ public class IssueManager {
 
     private void changeStatusOfIssue() {
         try {
-            ArrayList<Issue> issues = fileWrangler.getAllIssuesFromStash();
+            ArrayList<Issue> issues = fileWrangler.getAllIssuesFromFile("stash");
+
+            // print all issues found
             userInterface.print(issues);
+
+            // get desired issue
             userInterface.print("Which one do you wish to change the status of?(by number):");
             int target = userInterface.getCommandFromUser();
 
+            // get desired issue
             userInterface.print("""
                     What do you want it changed to?:\s
                     1. PENDING
@@ -65,13 +70,15 @@ public class IssueManager {
                     """);
             int changeTo = userInterface.getCommandFromUser();
 
+            // switch the status of the selected issue
             switch (changeTo){
                 case 1 -> issues.get(target).setStatus(StatusCode.PENDING);
                 case 2 -> issues.get(target).setStatus(StatusCode.APPROVED);
                 case 3 -> issues.get(target).setStatus(StatusCode.REJECTED);
             }
 
-            fileWrangler.overwriteStash(issues);
+            // overwrite stash with new issues
+            fileWrangler.overwriteFile(issues, "stash");
 
 
         } catch (FileNotFoundException e) {
@@ -81,17 +88,20 @@ public class IssueManager {
 
     public void validateIssue(){
         try {
-            ArrayList<Issue> issues = fileWrangler.getAllIssuesFromStash();
-            ArrayList<Issue> pendingIssues = new ArrayList<>();
+            ArrayList<Issue> issues = fileWrangler.getAllIssuesFromFile("stash");
 
+            // only get the issues with pending status
+            ArrayList<Issue> pendingIssues = new ArrayList<>();
             for (Issue issue : issues) {
                 if (issue.getStatus() == StatusCode.PENDING) pendingIssues.add(issue);
             }
 
+            // get desired issue
             userInterface.print(pendingIssues);
             userInterface.print("Which one do you wish to change the status of?(by number):");
             int target = userInterface.getCommandFromUser();
 
+            // get what to switch to
             userInterface.print("""
                     What do you want it changed to?:\s
                     1. APPROVED
@@ -100,12 +110,14 @@ public class IssueManager {
                     """);
             int changeTo = userInterface.getCommandFromUser();
 
+            // switch the status of the selected issue
             switch (changeTo){
                 case 1 -> pendingIssues.get(target).setStatus(StatusCode.APPROVED);
                 case 2 -> pendingIssues.get(target).setStatus(StatusCode.REJECTED);
             }
 
-            fileWrangler.overwriteStash(issues);
+            // overwrite stash with new issues
+            fileWrangler.overwriteFile(issues, "stash");
 
 
         } catch (FileNotFoundException e) {
@@ -114,7 +126,7 @@ public class IssueManager {
     }
 
     public Issue getIssueFromName(String title) throws FileNotFoundException {
-        ArrayList<Issue> issues = fileWrangler.getAllIssuesFromStash();
+        ArrayList<Issue> issues = fileWrangler.getAllIssuesFromFile("stash");
         for (Issue issue : issues) {
             if (issue.getTitle().equals(title)){
                 return issue;
@@ -137,7 +149,7 @@ public class IssueManager {
 
         // write to the stash
         try {
-            fileWrangler.writeToStash(issue);
+            fileWrangler.writeToFile(issue, "stash");
         }catch (FileNotFoundException e){
             userInterface.print(e);
         }

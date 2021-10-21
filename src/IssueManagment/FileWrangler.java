@@ -12,19 +12,19 @@ public class FileWrangler {
     private final String FILE_PATH_BOARD = "data/board.txt";
 
 
-    public void writeToStash(Issue issue) throws FileNotFoundException{
+    public void writeToFile(Issue issue, String fileName) throws FileNotFoundException{
         PrintStream ps = new PrintStream(new FileOutputStream(FILE_PATH_STASH, true));
         ps.append(issue.toString()).append('\n');
     }
 
-    public void overwriteStash(ArrayList<Issue> issues) throws FileNotFoundException{
+    public void overwriteFile(ArrayList<Issue> issues, String fileName) throws FileNotFoundException{
         PrintStream ps = new PrintStream(FILE_PATH_STASH);
         for (Issue issue : issues) {
             ps.append(issue.toString()).append('\n');
         }
     }
 
-    public ArrayList<Issue> getAllIssuesFromStash() throws FileNotFoundException{
+    public ArrayList<Issue> getAllIssuesFromFile(String fileName) throws FileNotFoundException{
         Scanner scanner = new Scanner(new File(FILE_PATH_STASH));
 
         ArrayList<Issue> issues = new ArrayList<>();
